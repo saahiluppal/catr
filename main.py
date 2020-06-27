@@ -42,7 +42,7 @@ def main(config):
     dataset_train = coco.build_dataset(config, mode='training')
     dataset_val = coco.build_dataset(config, mode='validation')
     print(f"Train: {len(dataset_train)}")
-    print(f"Val: {len(dataset_val)}")
+    print(f"Valid: {len(dataset_val)}")
 
     sampler_train = torch.utils.data.RandomSampler(dataset_train)
     sampler_val = torch.utils.data.SequentialSampler(dataset_val)
@@ -67,18 +67,8 @@ def main(config):
     print("Start Training..")
     for epoch in range(config.start_epoch, config.epochs):
         print(f"Epoch: {epoch}")
-        try:
-            epoch_loss = train_one_epoch(
-                model, criterion, data_loader_train, optimizer, device, epoch, config.clip_max_norm)
-        except Exception as e:
-            torch.save({
-                'model': model.state_dict(),
-                'optimizer': optimizer.state_dict(),
-                'lr_scheduler': lr_scheduler.state_dict(),
-                'epoch': epoch,
-            }, config.checkpoint)
-            print(e)
-            sys.exit(1)
+        epoch_loss = train_one_epoch(
+            model, criterion, data_loader_train, optimizer, device, epoch, config.clip_max_norm)
         lr_scheduler.step()
         print(f"Training Loss: {epoch_loss}")
 
