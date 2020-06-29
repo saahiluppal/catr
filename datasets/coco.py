@@ -83,15 +83,15 @@ class CocoCaption(Dataset):
 
 def build_dataset(config, mode='training'):
     if mode == 'training':
-        train_dir = config.train_dir
-        train_file = config.train_annot
+        train_dir = os.path.join(config.dir, 'train2017')
+        train_file = os.path.join(config.dir, 'annotations', 'captions_train2017.json')
         data = CocoCaption(train_dir, read_json(
             train_file), max_length=config.max_position_embeddings, limit=config.limit, transform=train_transform, mode='training')
         return data
 
     elif mode == 'validation':
-        val_dir = config.val_dir
-        val_file = config.val_annot
+        val_dir = os.path.join(config.dir, 'val2017')
+        val_file = os.path.join(config.dir, 'annotations', 'captions_val2017.json')
         data = CocoCaption(val_dir, read_json(
             val_file), max_length=config.max_position_embeddings, limit=config.limit, transform=val_transform, mode='validation')
         return data

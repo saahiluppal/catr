@@ -35,8 +35,5 @@ class Config(object):
         self.pre_norm = True
 
         # Dataset
-        self.train_dir = '../train2017'
-        self.train_annot = '../annotations/captions_train2017.json'
-        self.val_dir = '../val2017'
-        self.val_annot = '../annotations/captions_val2017.json'
+        self.dir = '../coco'
         self.limit = -1
