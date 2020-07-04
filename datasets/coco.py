@@ -49,13 +49,13 @@ class CocoCaption(Dataset):
         self.annot = [(self._process(val['image_id']), val['caption'])
                       for val in ann['annotations']]
         if mode=='validation':
-            self.annot = self.annot[: 1000]
+            self.annot = self.annot[: 2500]
         if mode == 'training':
             self.annot = self.annot[: limit]
 
         self.tokenizer = BertTokenizer.from_pretrained(
             'bert-base-uncased', do_lower=True)
-        self.max_length = max_length
+        self.max_length = max_length + 1
 
     def _process(self, image_id):
         val = str(image_id).zfill(12)
@@ -73,7 +73,7 @@ class CocoCaption(Dataset):
         image = nested_tensor_from_tensor_list(image.unsqueeze(0))
 
         caption_encoded = self.tokenizer.encode_plus(
-            caption, max_length=self.max_length, pad_to_max_length=True, return_attention_mask=True, return_token_type_ids=False)
+            caption, max_length=self.max_length, pad_to_max_length=True, return_attention_mask=True, return_token_type_ids=False, truncation=True)
         
         caption = np.array(caption_encoded['input_ids'])
         cap_mask = (1 - np.array(caption_encoded['attention_mask'])).astype(bool)
