@@ -51,7 +51,7 @@ class CocoCaption(Dataset):
         self.annot = [(self._process(val['image_id']), val['caption'])
                       for val in ann['annotations']]
         if mode=='validation':
-            self.annot = self.annot[: 2500]
+            self.annot = self.annot
         if mode == 'training':
             self.annot = self.annot[: limit]
 
