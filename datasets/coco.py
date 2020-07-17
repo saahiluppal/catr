@@ -30,7 +30,9 @@ train_transform = tv.transforms.Compose([
     tv.transforms.Lambda(under_max),
     tv.transforms.RandomHorizontalFlip(),
     tv.transforms.ToTensor(),
-    tv.transforms.Normalize((0.5, 0.5, 0.5), (0.5, 0.5, 0.5))
+    tv.transforms.Normalize((0.5, 0.5, 0.5), (0.5, 0.5, 0.5)),
+#    tv.transforms.RandomErasing(p=0.5, scale=(0.02, 0.05)),
+#    tv.transforms.RandomErasing(p=0.5, scale=(0.02, 0.04))
 ])
 
 val_transform = tv.transforms.Compose([
