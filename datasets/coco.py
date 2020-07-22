@@ -1,8 +1,10 @@
 from torch.utils.data import Dataset
+import torchvision.transforms.functional as TF
 import torchvision as tv
 
 from PIL import Image
 import numpy as np
+import random
 import os
 
 from transformers import BertTokenizer
@@ -26,13 +28,23 @@ def under_max(image):
     return image
 
 
+class RandomRotation:
+    def __init__(self, angles=[0, 90, 180, 270]):
+        self.angles = angles
+
+    def __call__(self, x):
+        angle = random.choice(self.angles)
+        return TF.rotate(x, angle, expand=True)
+
+
 train_transform = tv.transforms.Compose([
+    RandomRotation(),
     tv.transforms.Lambda(under_max),
+    tv.transforms.ColorJitter(brightness=[0.5, 1.3], contrast=[
+                              0.8, 1.5], saturation=[0.2, 1.5]),
     tv.transforms.RandomHorizontalFlip(),
     tv.transforms.ToTensor(),
     tv.transforms.Normalize((0.5, 0.5, 0.5), (0.5, 0.5, 0.5)),
-#    tv.transforms.RandomErasing(p=0.5, scale=(0.02, 0.05)),
-#    tv.transforms.RandomErasing(p=0.5, scale=(0.02, 0.04))
 ])
 
 val_transform = tv.transforms.Compose([
@@ -50,7 +62,7 @@ class CocoCaption(Dataset):
         self.transform = transform
         self.annot = [(self._process(val['image_id']), val['caption'])
                       for val in ann['annotations']]
-        if mode=='validation':
+        if mode == 'validation':
             self.annot = self.annot
         if mode == 'training':
             self.annot = self.annot[: limit]
@@ -76,9 +88,10 @@ class CocoCaption(Dataset):
 
         caption_encoded = self.tokenizer.encode_plus(
             caption, max_length=self.max_length, pad_to_max_length=True, return_attention_mask=True, return_token_type_ids=False, truncation=True)
-        
+
         caption = np.array(caption_encoded['input_ids'])
-        cap_mask = (1 - np.array(caption_encoded['attention_mask'])).astype(bool)
+        cap_mask = (
+            1 - np.array(caption_encoded['attention_mask'])).astype(bool)
 
         return image.tensors.squeeze(0), image.mask.squeeze(0), caption, cap_mask
 
@@ -86,14 +99,16 @@ class CocoCaption(Dataset):
 def build_dataset(config, mode='training'):
     if mode == 'training':
         train_dir = os.path.join(config.dir, 'train2017')
-        train_file = os.path.join(config.dir, 'annotations', 'captions_train2017.json')
+        train_file = os.path.join(
+            config.dir, 'annotations', 'captions_train2017.json')
         data = CocoCaption(train_dir, read_json(
             train_file), max_length=config.max_position_embeddings, limit=config.limit, transform=train_transform, mode='training')
         return data
 
     elif mode == 'validation':
         val_dir = os.path.join(config.dir, 'val2017')
-        val_file = os.path.join(config.dir, 'annotations', 'captions_val2017.json')
+        val_file = os.path.join(
+            config.dir, 'annotations', 'captions_val2017.json')
         data = CocoCaption(val_dir, read_json(
             val_file), max_length=config.max_position_embeddings, limit=config.limit, transform=val_transform, mode='validation')
         return data
