@@ -7,6 +7,15 @@ to load model with pretrained weights simply do:
 ```python
 model = torch.hub.load('saahiluppal/catr', 'catr_resnet101', pretrained=True)
 ```
+### Samples:
+
+<p align="center">
+  <img src=".github/cake.png" />
+  <img src=".github/girl.png" />
+  <img src=".github/office.png" />
+  <img src=".github/horse.png" />
+  <img src=".github/airplane.png" />
+</p>
 
 Test with your own bunch of images:
 ````bash
