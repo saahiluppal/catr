@@ -17,6 +17,8 @@ model = torch.hub.load('saahiluppal/catr', 'catr_resnet101', pretrained=True)
   <img src=".github/airplane.png" />
 </p>
 
+All these images has been annotated by CATR.
+
 Test with your own bunch of images:
 ````bash
 $ python predict.py --path /path/to/image
