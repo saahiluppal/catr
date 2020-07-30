@@ -5,7 +5,7 @@ from configuration import Config
 
 dependencies = ['torch', 'torchvision']
 
-def resnet101_catr(pretrained=False):
+def catr_resnet101(pretrained=False):
     config = Config()
     model, _ = caption.build_model(config)
     
