@@ -23,13 +23,14 @@ Test with your own bunch of images:
 ````bash
 $ python predict.py --path /path/to/image
 ````
+Or Try it out in colab [notebook](catr_demo.ipynb)
 
 # Usage 
 There are no extra compiled components in CATR and package dependencies are minimal,
 so the code is very simple to use. We provide instructions how to install dependencies.
 First, clone the repository locally:
 ```
-git clone https://github.com/saahiluppal/catr.git
+$ git clone https://github.com/saahiluppal/catr.git
 ```
 Then, install PyTorch 1.5+ and torchvision 0.6+ along with remaining dependencies:
 ```
