@@ -5,7 +5,7 @@ PyTorch training code and pretrained models for **CATR** (**CA**ption **TR**ansf
 The models are also available via torch hub,
 to load model with pretrained weights simply do:
 ```python
-model = torch.hub.load('saahiluppal/catr', 'catr_resnet101', pretrained=True)
+model = torch.hub.load('saahiluppal/catr', 'v3', pretrained=True)  # you can choose between v1, v2 and v3
 ```
 ### Samples:
 
@@ -21,7 +21,7 @@ All these images has been annotated by CATR.
 
 Test with your own bunch of images:
 ````bash
-$ python predict.py --path /path/to/image
+$ python predict.py --path /path/to/image --v v2  // You can choose between v1, v2, v3 [default is v3]
 ````
 Or Try it out in colab [notebook](catr_demo.ipynb)
 
@@ -65,7 +65,7 @@ The transformer is trained with dropout of 0.1, and the whole model is trained w
 ## Testing
 To test CATR with your own images.
 ```
-$ python predict.py --path /path/to/image
+$ python predict.py --path /path/to/image --v v2  // You can choose between v1, v2, v3 [default is v3]
 ```
 
 # License
