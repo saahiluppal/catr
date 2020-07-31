@@ -9,10 +9,20 @@ from configuration import Config
 
 parser = argparse.ArgumentParser(description='Image Captioning')
 parser.add_argument('--path', type=str, help='path to image', required=True)
+parser.add_argument('--v', type=str, help='version', default='v3')
 args = parser.parse_args()
 image_path = args.path
+version = args.v
 
-model = torch.hub.load('saahiluppal/catr', 'catr_resnet101', pretrained=True)
+if version == 'v1':
+    model = torch.hub.load('saahiluppal/catr', 'v1', pretrained=True)
+elif version == 'v2':
+    model = torch.hub.load('saahiluppal/catr', 'v2', pretrained=True)
+elif version == 'v3':
+    model = torch.hub.load('saahiluppal/catr', 'v3', pretrained=True)
+else:
+    raise NotImplementedError('Version not implemented')
+
 tokenizer = BertTokenizer.from_pretrained('bert-base-uncased')
 config = Config()
 
