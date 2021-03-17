@@ -12,7 +12,7 @@ from configuration import Config
 from engine import train_one_epoch, evaluate
 
 
-def main(config):
+def finetune(config):
     device = torch.device(config.device)
     print(f'Initializing Device: {device}')
 
@@ -96,4 +96,4 @@ def main(config):
 
 if __name__ == "__main__":
     config = Config()
-    main(config)
+    finetune(config)
