@@ -36,7 +36,7 @@ else:
       print("Found checkpoint! Loading!")
       model,_ = caption.build_model(config)
       print("Loading Checkpoint...")
-      checkpoint = torch.load(config.checkpoint, map_location='cpu')
+      checkpoint = torch.load(checkpoint_path, map_location='cpu')
       model.load_state_dict(checkpoint['model'])
 tokenizer = BertTokenizer.from_pretrained('bert-base-uncased')
 
