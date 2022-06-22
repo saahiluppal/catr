@@ -1,0 +1,13 @@
+1. model changed from bert to bengali bert base while doing prediction.
+2. hyperparam epoch changed to 5 because of time limitations.
+3. in coco.py changed image_id -> filename as the JSON file provided in bengali dataset have filename as key.
+4. in coco.py, multiple caption has been provided for single image, so we are considering first one only.
+5. No annotation keys provided so getting rid of it.
+6. for some unknown error (most probably image datas are lying in the zip file in seperate dirs as a result multiple 
+   colab based soultion to uznip the file failed and I could unzip 1443 data to be exact, plus a pkg reporting there
+   is a corrupt file) I have used 1443 data and 1243 for training limit.
+7. zerofilling seems unnecessary for us...
+8. switched pretrained model.
+9. we are not using multiple data type only using png, so conversion to jpg seems unnecessary, although it won't hurt
+   much if we convert it.
+10. path changed in config file and limit also.

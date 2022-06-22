@@ -55,25 +55,25 @@ val_transform = tv.transforms.Compose([
 
 
 class CocoCaption(Dataset):
-    def __init__(self, root, ann, max_length, limit, transform=train_transform, mode='training'):
+    def __init__(self, root, ann, max_length, limit=1243, transform=train_transform, mode='training'):
         super().__init__()
 
         self.root = root
         self.transform = transform
-        self.annot = [(self._process(val['image_id']), val['caption'])
-                      for val in ann['annotations']]
+        self.annot = [(self._process(val['filename']), val['caption'][0])
+                      for val in ann]
         if mode == 'validation':
             self.annot = self.annot
         if mode == 'training':
             self.annot = self.annot[: limit]
 
         self.tokenizer = BertTokenizer.from_pretrained(
-            'bert-base-uncased', do_lower=True)
+            'sagorsarker/bangla-bert-base', do_lower=True)
         self.max_length = max_length + 1
 
     def _process(self, image_id):
-        val = str(image_id).zfill(12)
-        return val + '.jpg'
+        val = str(image_id)
+        return val
 
     def __len__(self):
         return len(self.annot)
@@ -98,17 +98,17 @@ class CocoCaption(Dataset):
 
 def build_dataset(config, mode='training'):
     if mode == 'training':
-        train_dir = os.path.join(config.dir, 'train2017')
+        train_dir = os.path.join(config.dir, 'train')
         train_file = os.path.join(
-            config.dir, 'annotations', 'captions_train2017.json')
+            config.dir, 'annotations', 'captions.json')
         data = CocoCaption(train_dir, read_json(
             train_file), max_length=config.max_position_embeddings, limit=config.limit, transform=train_transform, mode='training')
         return data
 
     elif mode == 'validation':
-        val_dir = os.path.join(config.dir, 'val2017')
+        val_dir = os.path.join(config.dir, 'valid')
         val_file = os.path.join(
-            config.dir, 'annotations', 'captions_val2017.json')
+            config.dir, 'annotations', 'captions.json')
         data = CocoCaption(val_dir, read_json(
             val_file), max_length=config.max_position_embeddings, limit=config.limit, transform=val_transform, mode='validation')
         return data

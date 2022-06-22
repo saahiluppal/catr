@@ -38,7 +38,7 @@ else:
       print("Loading Checkpoint...")
       checkpoint = torch.load(checkpoint_path, map_location='cpu')
       model.load_state_dict(checkpoint['model'])
-tokenizer = BertTokenizer.from_pretrained('bert-base-uncased')
+tokenizer = BertTokenizer.from_pretrained('sagorsarker/bangla-bert-base')
 
 start_token = tokenizer.convert_tokens_to_ids(tokenizer._cls_token)
 end_token = tokenizer.convert_tokens_to_ids(tokenizer._sep_token)

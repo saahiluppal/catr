@@ -6,7 +6,7 @@ class Config(object):
         self.lr = 1e-4
 
         # Epochs
-        self.epochs = 30
+        self.epochs = 5
         self.lr_drop = 20
         self.start_epoch = 0
         self.weight_decay = 1e-4
@@ -39,5 +39,5 @@ class Config(object):
         self.pre_norm = True
 
         # Dataset
-        self.dir = '../coco'
-        self.limit = -1
+        self.dir = '/content/data'
+        self.limit = 1243
