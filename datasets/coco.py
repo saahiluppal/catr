@@ -100,7 +100,7 @@ def build_dataset(config, mode='training'):
     if mode == 'training':
         train_dir = os.path.join(config.dir, 'train')
         train_file = os.path.join(
-            config.dir, 'annotations', 'captions.json')
+            config.dir, 'captions.json')
         data = CocoCaption(train_dir, read_json(
             train_file), max_length=config.max_position_embeddings, limit=config.limit, transform=train_transform, mode='training')
         return data
@@ -108,7 +108,7 @@ def build_dataset(config, mode='training'):
     elif mode == 'validation':
         val_dir = os.path.join(config.dir, 'valid')
         val_file = os.path.join(
-            config.dir, 'annotations', 'captions.json')
+            config.dir, 'captions.json')
         data = CocoCaption(val_dir, read_json(
             val_file), max_length=config.max_position_embeddings, limit=config.limit, transform=val_transform, mode='validation')
         return data

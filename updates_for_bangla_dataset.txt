@@ -11,3 +11,4 @@
 9. we are not using multiple data type only using png, so conversion to jpg seems unnecessary, although it won't hurt
    much if we convert it.
 10. path changed in config file and limit also.
+11. no annotations dir so removed it from the path join.
